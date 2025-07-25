@@ -1,27 +1,66 @@
-﻿using System.Text;
+﻿using System.IO.Compression;
+using System.Text;
 using DesafioProjetoHospedagem.Models;
 
 Console.OutputEncoding = Encoding.UTF8;
 
-//Cria os modelos de hóspedes e cadastra na lista de hóspedes
-List<Pessoa> hospedes = new List<Pessoa>();
+bool exibirMenu = true;
 
-    Pessoa p1 = new Pessoa(nome: "Hóspede 1");
-    Pessoa p2 = new Pessoa(nome: "Hóspede 2");
-    Pessoa p3 = new Pessoa(nome: "Hóspede 3");
+Menu menu = new Menu();
 
-hospedes.Add(p1);
-hospedes.Add(p2);
-hospedes.Add(p3);
+Console.WriteLine("\nSistema de Cadastros e Controle de Custos\n");
+    Console.WriteLine("Pressione uma tecla para continuar");
+    Console.ReadLine();
 
-//Cria a suíte
-Suite suite = new Suite(tipoSuite: "Premium", capacidade: 2, valorDiaria: 30);
+while (exibirMenu)
+{
+    Console.Clear();
+    Console.WriteLine("------------------------------------------");
+    Console.WriteLine("Digite 1 para cadastrar hóspede");
+    Console.WriteLine("Digite 2 para cadastrar suite");
+    Console.WriteLine("Digite 3 para obter quantidade de Hospedes");
+    Console.WriteLine("Digite 4 para calcular valor total");
+    Console.WriteLine("Digite 5 para sair");
+    Console.WriteLine("------------------------------------------");
 
-//Cria uma nova reserva, passando a suíte e os hóspedes
-Reserva reserva = new Reserva(diasReservados: 10);
-reserva.CadastrarSuite(suite);
-reserva.CadastrarHospedes(hospedes);
 
-//Exibe a quantidade de hóspedes e o valor da diária
-Console.WriteLine($"Hóspedes: {reserva.ObterQuantidadeHospedes()}");
-Console.WriteLine($"Valor diária: {reserva.CalcularValorDiaria():C}");
+    switch (Console.ReadLine())
+    {
+        case "1":
+
+            Console.WriteLine("Cadastrando novo Hóspede:");
+            menu.CadastrarHospedes();
+            break;
+
+        case "2":
+
+            Console.WriteLine("Cadastrando a Suite:");
+            menu.CadastrarSuite();
+            menu.ApresentarSuite();
+            break;
+
+        case "3":
+
+            menu.ApresentarQuantidadeHospedes();
+            break;
+
+        case "4":
+
+            menu.ApresentarCalculoValorDiaria();
+            break;
+
+        case "5":
+
+            exibirMenu = false;
+            break;
+
+        default:
+            Console.WriteLine("Opção inválida");
+            break;
+
+    }
+    Console.WriteLine("Pressione uma tecla para continuar");
+    Console.ReadLine();
+}
+
+Console.WriteLine("O programa se encerrou");
